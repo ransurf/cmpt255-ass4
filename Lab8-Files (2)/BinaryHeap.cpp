@@ -8,10 +8,10 @@
  * Blank space 1: The choices are "minimum" or "maximum" 
  *                   (Todo: fill in the other blank spaces below.)
  * Blank space 2: Refer to our lecture notes for the data structure used as CDT.
- * Description: __________ Binary Heap data collection ADT class. 
- *              __________ implementation.
+ * Description: min Binary Heap data collection ADT class. 
+ *              array implementation.
  *
- * Class Invariant:  Always a __________ Binary Heap
+ * Class Invariant:  Always a min Binary Heap
  * 
  * Author: 
  *
@@ -41,20 +41,18 @@ unsigned int BinaryHeap::getElementCount() const {
 
 // Description: Inserts newElement into the Binary Heap.
 //              It returns "true" if successful, otherwise "false".        
-// Postcondition: Remains a __________ Binary Heap after the insertion.
+// Postcondition: Remains a min Binary Heap after the insertion.
 // Time Efficiency: O(log2 n)
 bool BinaryHeap::insert(Event& newElement) {
 
     bool ableToInsert = false;
-  
-	// To do
 	
     return ableToInsert;
 
 } // end insert
 
 
-// Utility method - Recursively put the array back into a __________ Binary Heap.
+// Utility method - Recursively put the array back into a min Binary Heap.
 void BinaryHeap::reHeapUp(unsigned int indexOfBottom) {
 
    // To do
@@ -66,7 +64,7 @@ void BinaryHeap::reHeapUp(unsigned int indexOfBottom) {
 
 // Description: Removes (but does not return) the element located at the root.
 // Precondition: This Binary Heap is not empty.
-// Postcondition: Remains a __________ Binary Heap after the removal.	
+// Postcondition: Remains a min Binary Heap after the removal.	
 // Exceptions: Throws EmptyDataCollectionException if this Binary Heap is empty.
 // Time Efficiency: O(log2 n)
 void BinaryHeap::remove() {
@@ -78,7 +76,7 @@ void BinaryHeap::remove() {
 }  // end remove
 
 
-// Utility method - Recursively put the array back into a __________ Binary Heap.
+// Utility method - Recursively put the array back into a min Binary Heap.
 void BinaryHeap::reHeapDown(unsigned int indexOfRoot) {
 
 	unsigned int indexOfMinChild = indexOfRoot;

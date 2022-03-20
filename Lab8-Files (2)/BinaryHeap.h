@@ -29,7 +29,9 @@ class BinaryHeap {
 
 private:
     // To do: Add the data members here!
-	
+	Event* heapArray;
+	unsigned int elementCount;
+	unsigned int maxSize;
 	
 	// Utility method - Recursively put the array back into a __________ Binary Heap.
 	void reHeapUp(unsigned int indexOfBottom);
