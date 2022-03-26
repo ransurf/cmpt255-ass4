@@ -1,0 +1,26 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check Update
+      run: sudo apt-get update
+
+    - name: Install Valgrind
+      run: sudo apt-get install -y valgrind
+
+    - name: Compile Part 1
+      run: make
+      working-directory: Part1
+      
+    - name: Part 1 Test
+      run: valgrind ./td
