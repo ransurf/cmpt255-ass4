@@ -1,4 +1,4 @@
-# all: td
+all: td
 
 td: Event.o PriorityQueue.o Queue.o EmptyDataCollectionException.o
 	g++ -Wall -o td Event.o PriorityQueue.o Queue.o EmptyDataCollectionException.o
