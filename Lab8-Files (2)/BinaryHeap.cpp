@@ -46,6 +46,13 @@ unsigned int BinaryHeap::getElementCount() const {
 bool BinaryHeap::insert(Event& newElement) {
 
     bool ableToInsert = false;
+
+	if (this->elementCount < this->maxSize) {
+		heapArray[elementCount] = newElement;
+		bubbleUp(elementCount);
+		elementCount++;
+		ableToInsert = true;
+	}
 	
     return ableToInsert;
 
@@ -56,7 +63,7 @@ bool BinaryHeap::insert(Event& newElement) {
 void BinaryHeap::reHeapUp(unsigned int indexOfBottom) {
 
    // To do
-
+	
 	return;
 	
 } // end reHeapUp
@@ -70,6 +77,14 @@ void BinaryHeap::reHeapUp(unsigned int indexOfBottom) {
 void BinaryHeap::remove() {
       
    // To do
+	if(this->elementCount == 0) {
+		throw EmptyDataCollectionException("Heap is Empty.");
+	}
+
+
+	heapArray[0] = heapArray[elementCount - 1];
+	elementCount--;
+	reHeapDown(0);
 
 	return;
 	
