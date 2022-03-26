@@ -24,3 +24,4 @@ jobs:
       
     - name: Part 1 Test
       run: valgrind ./td
+      working-directory: Part1
