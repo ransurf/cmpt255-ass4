@@ -82,7 +82,7 @@ int main(int argc, char* argv[]){
             return 1;
         }
     }
-    customerCount = eventPriorityQueue.getElementCount();
+    // customerCount = eventPriorityQueue.getElementCount();
 
     // Event Loop
     while (!eventPriorityQueue.isEmpty()) {
@@ -104,7 +104,7 @@ int main(int argc, char* argv[]){
     cout << "Simulation Ends" << endl;
     cout << endl;
     cout << "Final Statistics: " << endl;
-    cout << "    Total number of people processed:  " << customerCount << endl;
-    cout << "    Average amount of time spent waiting: " << (float)sum/(float)customerCount << endl;
+    // cout << "    Total number of people processed:  " << customerCount << endl;
+    // cout << "    Average amount of time spent waiting: " << (float)sum/(float)customerCount << endl;
     return 0;
 }

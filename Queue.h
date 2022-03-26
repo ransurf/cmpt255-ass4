@@ -1,180 +1,153 @@
-/*
+/* 
  * Queue.h
  *
- * Class Description: Models a Queue
- * Class Invariant: - First in first out
- *                  - no access beyond the front of the queue
- *                  - only add new element to the back
- * Last Modified: June 2017
- * Author: Brendin Green
+ * Description: Implementation of an int sequence with enqueue/dequeue ...
+ * Class Invariant: ... in FIFO order
+ *
+ * Author:
+ * Date:
  */
-
+  
 #pragma once
-
-#include "Node.h"
-#include "EmptyDataCollectionException.h"
-
+#include <iostream>
 using namespace std;
-
 
 template <class ElementType>
 class Queue {
+	
+    private:
+        static unsigned const INITIAL_CAPACITY = 6; // Constant INITIAL_CAPACITY
+        ElementType* elements;             // To do: replace this by int * elements -> Question 4.a)
 
-private:
+        unsigned elementCount;                      // Number of elements in the Queue
+        unsigned capacity;                          // Actual capacity of the data structure (number of cells in the array)
+        unsigned frontindex;                        // Index the topmost element
+        unsigned backindex;                         // Index where the next element will be placed               
 
-    int elementCount;
-    Node<ElementType>* head;
-    Node<ElementType>* tail;
+        // Description: Resize the array
+        bool resize(const int size);
 
-public:
+        // Description: Remove the non-usable element
+        bool clean();
 
-    // Let's put our constructor(s) and destructor (if any) ***here***.
+    public:
+        // Description:  Constructor
+        Queue();
 
-    // Default Constructor
-    Queue();
-    // Default Destructor
-    ~Queue();
 
-/******* Public Interface - START - *******/
+        // Description: Destructor
+        ~Queue();
 
-    // Description: Returns the number of elements in the Queue.
-    // (This method eases testing.)
-    // Time Efficiency: O(1)
-    int getElementCount() const;
 
-    // Description: Returns "true" is this Queue is empty, otherwise "false".
-    // Time Efficiency: O(1)
-    bool isEmpty() const;
+        // Description:  Inserts element x at the back (O(1))
+        void enqueue(const ElementType& x);
 
-    // Description: Adds newElement to the "back" of this Queue
-    //              (not necessarily the "back" of its data structure) and
-    //              returns "true" if successful, otherwise "false".
-    // Time Efficiency: O(1)
-    bool enqueue(const ElementType& newElement);
 
-    // Description: Removes the element at the "front" of this Queue
-    //              (not necessarily the "front" of its data structure) and
-    //              returns "true" if successful, otherwise "false".
-    // Precondition: This Queue is not empty.
-    // Time Efficiency: O(1)
-    bool dequeue();
+        // Description:  Removes the frontmost element (O(1))
+        // Precondition:  Queue not empty
+        void dequeue();
 
-    // Description: Returns (a copy of) the element located at the "front" of this Queue.
-    // Precondition: This Queue is not empty.
-    // Postcondition: This Queue is unchanged.
-    // Exceptions: Throws EmptyDataCollectionException if this Queue is empty.
-    // Time Efficiency: O(1)
-    ElementType peek() const;
 
-    // Description: Prints all elements of the queue for testing purposes.
-    // Postcondition: This Queue is unchanged.
-    // Time Efficiency: O(n)
-    void printAll() const;
+        // Description:  Returns a copy of the frontmost element (O(1))
+        // Precondition:  Queue not empty
+        ElementType& peek() const;
 
-/******* Public Interface - END - *******/
 
+        // Description:  Returns true if and only if queue empty (O(1))
+        bool isEmpty() const;
 };
 
-// Basic Constructor for Queue
-template <class ElementType>
-Queue<ElementType>::Queue(){
-    elementCount = 0;
-    head = NULL;
-    tail = NULL;
-}
 
-// Basic Destructor for Queue
+// #include "Queue.cpp"
+// Description:  Constructor
 template <class ElementType>
-Queue<ElementType>::~Queue(){
-    for (int i = 0; i < getElementCount(); i++){
-        dequeue();
+Queue<ElementType>::Queue() : elementCount(0), capacity(INITIAL_CAPACITY), frontindex(0), backindex(0) {
+} 
+
+template <class ElementType>
+Queue<ElementType>::~Queue() {
+    if(this->capacity > 0) {
+        delete [] this->elements;
     }
 }
 
-// Description: Returns the number of elements in the Queue.
-// (This method eases testing.)
-// Time Efficiency: O(1)
 template <class ElementType>
-int Queue<ElementType>::getElementCount() const {
-    return this->elementCount;
+bool Queue<ElementType>::resize(const int size) {
+    // If (backindex - frontindex) is more than the given size OR elementCount less than the Initial Capacity
+    // Do not allow resize
+    if(size < this->backindex - this->frontindex || size < this->INITIAL_CAPACITY) {
+        return false;
+    }
+
+    // Create new array of given size
+    int* newArr = new ElementType[size];
+
+    // Copy the oldArr elements to the new array
+    for(int i = this->frontindex; i < this->backindex; i++) {
+        newArr[i - this->frontindex] = this->elements[i];
+    }
+
+    // Change capacity
+    this->capacity = size;
+    this->backindex = this->elementCount;
+
+    // Reset frontindex
+    this->frontindex = 0;
+
+    // Replace old Arr with new Arr
+    int* oldArr = this->elements;
+    this->elements = newArr;
+    delete [] oldArr;
+
+    return true;
 }
 
-// Description: Returns "true" is this Queue is empty, otherwise "false".
-// Time Efficiency: O(1)
+// Description:  Inserts element x at the back (O(1))
+template <class ElementType>
+void Queue<ElementType>::enqueue(const ElementType& x) {
+    // If elementCount 0, initialize
+    if(this->elementCount == 0)
+    {
+        this->elements = new ElementType[this->INITIAL_CAPACITY];
+        this->capacity = this->INITIAL_CAPACITY;
+    }
+    // If capacity and elementCount size is the same, increase capacity * 2
+    else if(this->capacity <= this->backindex + 1) {
+        resize(this->capacity * 2);
+    }
+
+    elementCount++;
+    elements[backindex] = x;
+    backindex = (backindex + 1) % capacity;
+} 
+
+
+// Description:  Removes the frontmost element (O(1))
+// Precondition:  Queue not empty
+template <class ElementType>
+void Queue<ElementType>::dequeue() {
+    // If elementCount < 0.25 Array Capacity AND 1/2 * Array Capacity >  Initial Capacity , half the resize.
+    bool cond1 = (double)this->elementCount < (double)(0.25 * this->capacity);
+    bool cond2 = ((int)(0.5 * this->capacity) > this->INITIAL_CAPACITY);
+    if(cond1 && cond2) {
+        resize(this->capacity * 0.5);
+    }
+
+    this->elementCount--;
+    frontindex = (frontindex + 1) % capacity;
+} 
+
+
+// Description:  Returns a copy of the frontmost element (O(1))
+// Precondition:  Queue not empty
+template <class ElementType>
+ElementType& Queue<ElementType>::peek() const {
+    return elements[frontindex];
+} 
+
+
+// Description:  Returns true if and only if queue empty (O(1))
 template <class ElementType>
 bool Queue<ElementType>::isEmpty() const {
-    return this->elementCount == 0;
+    return elementCount == 0;
 }
-
-// Description: Adds newElement to the "back" of this Queue
-//              (not necessarily the "back" of its data structure) and
-//              returns "true" if successful, otherwise "false".
-// Time Efficiency: O(1)
-template <class ElementType>
-bool Queue<ElementType>::enqueue(const ElementType& newElement){
-
-    Node<ElementType>* newNode = new Node<ElementType>(newElement);
-    if (isEmpty()){
-        this->head = newNode;
-        this->tail = newNode;
-    } else {
-        this->tail-> next = newNode;
-        this->tail = this->tail->next;
-    }
-    elementCount++;
-    return true;
-}
-
-// Description: Removes the element at the "front" of this Queue
-//              (not necessarily the "front" of its data structure) and
-//              returns "true" if successful, otherwise "false".
-// Precondition: This Queue is not empty.
-// Time Efficiency: O(1)
-template <class ElementType>
-bool Queue<ElementType>::dequeue(){
-    if (isEmpty())
-        return false;
-
-    Node<ElementType>* toBeRemoved;
-    if (getElementCount() == 1) {
-        toBeRemoved = this->head;
-        this->head = NULL;
-        this->tail = NULL;
-    } else {
-        toBeRemoved = this->head;
-        this->head = this->head->next;
-    }
-
-    delete toBeRemoved;
-    toBeRemoved = NULL;
-    elementCount--;
-    return true;
-}
-
-// Description: Returns (a copy of) the element located at the "front" of this Queue.
-// Precondition: This Queue is not empty.
-// Postcondition: This Queue is unchanged.
-// Exceptions: Throws EmptyDataCollectionException if this Queue is empty.
-// Time Efficiency: O(1)
-template <class ElementType>
-ElementType Queue<ElementType>::peek() const {
-    if (isEmpty()){
-        throw EmptyDataCollectionException("Queue is empty");
-    } else {
-        return head->data;
-    }
-}
-
-// Description: Prints all elements of the queue for testing purposes.
-// Postcondition: This Queue is unchanged.
-// Time Efficiency: O(n)
-template <class ElementType>
-void Queue<ElementType>::printAll() const {
-    Node<ElementType>* current = head;
-    while (current != NULL){
-        cout << current->data << endl;
-        current = current->next;
-    }
-}
-
-
