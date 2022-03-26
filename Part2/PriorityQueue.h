@@ -23,7 +23,7 @@ class PriorityQueue
 
 private:
     static const int MAX_ELEMENTS = 100;
-    BinaryHeap elements;
+    BinaryHeap<ElementType> elements = BinaryHeap<ElementType>();
     int elementCount;
     int capacity;
 
@@ -32,6 +32,9 @@ public:
 
     // Default Constructor
     PriorityQueue();
+
+    // Default Destructor
+    ~PriorityQueue();
 
     /******* Public Interface - START - *******/
 
@@ -57,10 +60,12 @@ public:
     // Postcondition: This Priority Queue is unchanged.
     // Exceptions: Throws EmptyDataCollectionException if this Priority Queue is empty.
     // Time Efficiency: O(1)
-    ElementType &peek() const;
+    ElementType peek() const;
 
     /******* Public Interface - END - *******/
 
     // Let's feel free to add other private helper methods to our Priority Queue class.
 
 }; // end PriorityQueue
+
+#include "PriorityQueue.cpp"

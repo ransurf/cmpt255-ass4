@@ -19,19 +19,18 @@
 #pragma once
 
 #include <iostream>
-#include "Event.h"
 #include "EmptyDataCollectionException.h"   // To do: Feel free to recycle an exception class from Assignment 3.
 
 using namespace std;
 
-
+template <class ElementType>
 class BinaryHeap {
 
 private:
     // To do: Add the data members here!
 	int elementCount;
 
-	Event elements[100];
+	ElementType elements[100];
 	
 	// Utility method - Recursively put the array back into a __________ Binary Heap.
 	void reHeapUp(unsigned int indexOfBottom);
@@ -55,7 +54,7 @@ public:
 	//              It returns "true" if successful, otherwise "false".        
 	// Postcondition: Remains a __________ Binary Heap after the insertion.
 	// Time Efficiency: O(log2 n)
-	bool insert(Event& newElement);
+	bool insert(const ElementType& newElement);
 	   
 	// Description: Removes (but does not return) the element located at the root.
 	// Precondition: This Binary Heap is not empty.
@@ -69,10 +68,11 @@ public:
 	// Postcondition: This Binary Heap is unchanged.
 	// Exceptions: Throws EmptyDataCollectionException if this Binary Heap is empty.
 	// Time Efficiency: O(1) 
-	Event retrieve() const;
+	ElementType retrieve() const;
 
 	// For Testing Purposes
 	// Description: Prints the content of "this". 
-	friend ostream & operator<<(ostream & os, const BinaryHeap& rhs);
+	friend ostream& operator<<(ostream & os, const BinaryHeap<ElementType>& rhs);
    
 }; // end BinaryHeap
+#include "BinaryHeap.cpp"

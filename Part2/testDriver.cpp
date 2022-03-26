@@ -19,12 +19,13 @@ void test_priorityQueue() {
     pq2.enqueue(2);
     pq2.enqueue(3);
 
-    assert(!pq2.isEmpty());
-    assert(pq2.peekPriority() == 1);
+    // cout << pq2.isEmpty() << endl;
+    // assert(!pq2.isEmpty());
+    assert(pq2.peek() == 1);
     pq2.dequeue();
-    assert(pq2.peekPriority() == 2);
+    assert(pq2.peek() == 2);
     pq2.dequeue();
-    assert(pq2.peekPriority() == 3);
+    assert(pq2.peek() == 3);
 
     cout << "Passed" << endl;
 }

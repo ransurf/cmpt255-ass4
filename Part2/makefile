@@ -1,16 +1,13 @@
 all: td
 
-td: EmptyDataCollectionException.o BinaryHeap.o Event.o TestDriver.o PriorityQueue.h 
-	g++ -Wall -o lab TestDriver.o BinaryHeap.o Event.o EmptyDataCollectionException.o
+td: EmptyDataCollectionException.o TestDriver.o BinaryHeap.h PriorityQueue.h
+	g++ -Wall -o td TestDriver.o EmptyDataCollectionException.o
 
-TestDriver.o: TestDriver.cpp
-	g++ -Wall -c TestDriver.cpp
-		
-BinaryHeap.o: BinaryHeap.h BinaryHeap.cpp
+BinaryHeap.o: BinaryHeap.cpp BinaryHeap.h
 	g++ -Wall -c BinaryHeap.cpp
 
-Event.o: Event.h Event.cpp
-	g++ -Wall -c Event.cpp
+TestDriver.o: TestDriver.cpp PriorityQueue.h
+	g++ -Wall -c TestDriver.cpp
 
 EmptyDataCollectionException.o: EmptyDataCollectionException.h EmptyDataCollectionException.cpp
 	g++ -Wall -c EmptyDataCollectionException.cpp

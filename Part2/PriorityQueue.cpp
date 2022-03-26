@@ -2,7 +2,13 @@
 
 // Default Constructor
 template <class ElementType>
-PriorityQueue<ElementType>::PriorityQueue() : elementCount(0), capacity(PriorityQueue::MAX_ELEMENTS) {}
+PriorityQueue<ElementType>::PriorityQueue() : elementCount(0), capacity(MAX_ELEMENTS) {}
+
+// Default Destructor
+template <class ElementType>
+PriorityQueue<ElementType>::~PriorityQueue() {
+
+}
 
 // Description: Returns "true" is this Priority Queue is empty, otherwise "false".
 // Time Efficiency: O(1)
@@ -18,11 +24,12 @@ bool PriorityQueue<ElementType>::isEmpty() const {
 // Time Efficiency: O(n)
 template <class ElementType>
 bool PriorityQueue<ElementType>::enqueue(const ElementType &newElement) {
+
     // If elementCount is less than capacity, then we can add the element
     if (elementCount < capacity)
     {
         elements.insert(newElement);
-        elementCount++;
+        this->elementCount++;
         return true;
     }
     return false;
@@ -49,10 +56,10 @@ void PriorityQueue<ElementType>::dequeue() {
 // Exception: Throws EmptyDataCollectionException if this Priority Queue is empty.
 // Time Efficiency: O(1)
 template <class ElementType>
-ElementType &PriorityQueue<ElementType>::peek() const {
+ElementType PriorityQueue<ElementType>::peek() const {
     if (isEmpty())
     {
         throw EmptyDataCollectionException("PriorityQueue::peek() called on empty PriorityQueue");
     }
-    return elements.peek();
+    return elements.retrieve();
 }

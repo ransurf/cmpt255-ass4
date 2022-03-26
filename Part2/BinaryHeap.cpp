@@ -23,7 +23,8 @@
 #include <math.h> 
   
 // Default Constructor
-BinaryHeap::BinaryHeap() {
+template <class ElementType>
+BinaryHeap<ElementType>::BinaryHeap() {
    elementCount = 0;
    
 } // end of default constructor
@@ -32,7 +33,8 @@ BinaryHeap::BinaryHeap() {
 // Description: Returns the number of elements in the Binary Heap.
 // Postcondition:  The Binary Heap is unchanged by this operation.
 // Time Efficiency: O(1)
-unsigned int BinaryHeap::getElementCount() const {
+template <class ElementType>
+unsigned int BinaryHeap<ElementType>::getElementCount() const {
    return elementCount;
 }  // end getElementCount
 
@@ -41,7 +43,8 @@ unsigned int BinaryHeap::getElementCount() const {
 //              It returns "true" if successful, otherwise "false".        
 // Postcondition: Remains a min Binary Heap after the insertion.
 // Time Efficiency: O(log2 n)
-bool BinaryHeap::insert(Event& newElement) {
+template <class ElementType>
+bool BinaryHeap<ElementType>::insert(const ElementType& newElement) {
 
     bool ableToInsert = true;
   
@@ -55,14 +58,15 @@ bool BinaryHeap::insert(Event& newElement) {
 
 
 // Utility method - Recursively put the array back into a min Binary Heap.
-void BinaryHeap::reHeapUp(unsigned int indexOfBottom) {
+template <class ElementType>
+void BinaryHeap<ElementType>::reHeapUp(unsigned int indexOfBottom) {
 
 	if(indexOfBottom > 0) {
 		int indexOfParent = floor((indexOfBottom - 1) / 2);
 		if(elements[indexOfBottom] <= elements[indexOfParent])
 		{
 			//Swap
-			Event temp = elements[indexOfParent];
+			ElementType temp = elements[indexOfParent];
 			elements[indexOfParent] = elements[indexOfBottom];
 			elements[indexOfBottom] = temp;
 			reHeapUp(indexOfParent);
@@ -79,7 +83,8 @@ void BinaryHeap::reHeapUp(unsigned int indexOfBottom) {
 // Postcondition: Remains a min Binary Heap after the removal.	
 // Exceptions: Throws EmptyDataCollectionException if this Binary Heap is empty.
 // Time Efficiency: O(log2 n)
-void BinaryHeap::remove() {
+template <class ElementType>
+void BinaryHeap<ElementType>::remove() {
 	if ( elementCount == 0 )
     	throw(EmptyDataCollectionException("remove() called with an empty BinaryHeap.")); 
    
@@ -92,7 +97,8 @@ void BinaryHeap::remove() {
 
 
 // Utility method - Recursively put the array back into a min Binary Heap.
-void BinaryHeap::reHeapDown(unsigned int indexOfRoot) {
+template <class ElementType>
+void BinaryHeap<ElementType>::reHeapDown(unsigned int indexOfRoot) {
 
 	unsigned int indexOfMinChild = indexOfRoot;
 	
@@ -116,7 +122,7 @@ void BinaryHeap::reHeapDown(unsigned int indexOfRoot) {
 	// Swap parent with smallest of children.
 	if (indexOfMinChild != indexOfRoot) {
 		
-	   Event temp = elements[indexOfRoot];
+	   ElementType temp = elements[indexOfRoot];
 	   elements[indexOfRoot] = elements[indexOfMinChild];
 	   elements[indexOfMinChild] = temp;
 	   
@@ -134,7 +140,8 @@ void BinaryHeap::reHeapDown(unsigned int indexOfRoot) {
 // Postcondition: This Binary Heap is unchanged.
 // Exceptions: Throws EmptyDataCollectionException if this Binary Heap is empty.
 // Time Efficiency: O(1) 
-Event BinaryHeap::retrieve() const {
+template <class ElementType>
+ElementType BinaryHeap<ElementType>::retrieve() const {
    
    // Enforce precondition
    if ( elementCount > 0 )
@@ -147,7 +154,8 @@ Event BinaryHeap::retrieve() const {
 
 // For Testing Purposes
 // Description: Prints the content of "rhs".
-ostream& operator<<(ostream & os, const BinaryHeap& rhs) {
+template <class ElementType>
+ostream& operator<<(ostream & os, const BinaryHeap<ElementType>& rhs) {
 	
 	for ( unsigned int index = 0; index < rhs.elementCount; index++ )
 		os << rhs.elements[index]; // Print data
