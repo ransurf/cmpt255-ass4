@@ -3,8 +3,8 @@
  *
  * Class Description: Models an event (arrival or departure)
  * Class Invariant:  Must be of type Departure or Arrival (D or A).
- * Last Modified: March 2022
- * Author: Daehyung Kwak
+ * Last Modified: March 26 2022
+ * Author: Daehyung Kwak and John Mavrick Reyes
  */
 #include <iostream>
 #include "Event.h"

@@ -13,26 +13,34 @@
 using namespace std;
 
 #include <sstream>
+#include <fstream>
 #include <iomanip>
 
+// store sum of waiting time
 int sum = 0;
+int customerCount = 0;
 
+// Process an arrival event
 void processArrival(Event& arrivalEvent, PriorityQueue<Event>& eventPriorityQueue, Queue<Event>& bankLine, int & currentTime, bool & tellerAvailable){
-    cout << "Processing an arrival event at time:" << setw(5) << right << currentTime << endl;
+    cout << "Processing an arrival event at time:" << setw(6) << right << currentTime << endl;
+    
     eventPriorityQueue.dequeue();
     int departureTime;
-    if (bankLine.isEmpty() && tellerAvailable){
+    // if there is a teller available, process the customer
+    if (bankLine.isEmpty() && tellerAvailable) {
         departureTime = currentTime + arrivalEvent.getLength();
         Event departureEvent = Event(departureTime);
         eventPriorityQueue.enqueue(departureEvent);
         tellerAvailable = false;
+    // if there is no teller available, add the customer to the bank line
     } else {
         bankLine.enqueue(arrivalEvent);
     }
 }
 
+// Process a departure event
 void processDeparture(Event& departureEvent, PriorityQueue<Event>& eventPriorityQueue, Queue<Event>& bankLine, int & currentTime, bool & tellerAvailable){
-    cout << "Processing a departure event at time:" << setw(4) << right << currentTime << endl;
+    cout << "Processing a departure event at time:" << setw(5) << right << currentTime << endl;
     eventPriorityQueue.dequeue();
 
     int departureTime;
@@ -41,7 +49,7 @@ void processDeparture(Event& departureEvent, PriorityQueue<Event>& eventPriority
 
         try {
             Event customer = bankLine.peek();
-            sum = sum + currentTime - customer.getTime();
+            sum = sum + currentTime - customer.getTime(); // update sum of waiting time
             bankLine.dequeue();
             departureTime = currentTime + customer.getLength();
             Event newDepartureEvent = Event(departureTime);
@@ -55,15 +63,16 @@ void processDeparture(Event& departureEvent, PriorityQueue<Event>& eventPriority
     }
 }
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
+    
+    // open file
+    ifstream inputFile;
+    inputFile.open(argv[1]);
 
-    cout << "Simulation Begins" << endl;
     int currentTime = 0;
     Queue<Event> bankLine = Queue<Event>();
     PriorityQueue<Event> eventPriorityQueue = PriorityQueue<Event>();
-
     bool tellerAvailable = true;
-
     double customerCount = 0.0;
 
     string aLine = "";
@@ -71,9 +80,16 @@ int main(int argc, char* argv[]){
     int time = 0;
     Event streamEvent;
 
-    while(getline(cin >> ws, aLine)) {   // while (there is data)
+    cout << "Simulation Begins" << endl;
+
+    while( getline(inputFile, aLine)) {   // while (there is data)
+
+        // get time as first element of line and length as second element of line as strings
         stringstream ss(aLine);
-        ss >> time >> length;
+        ss >> time;
+        ss >> length;
+
+        // create event and enqueue it if allowed
         streamEvent =  Event();
         streamEvent.setLength(length);
         streamEvent.setTime(time);
@@ -81,8 +97,9 @@ int main(int argc, char* argv[]){
         if (!eventPriorityQueue.enqueue(streamEvent)){
             return 1;
         }
+
+        customerCount++;
     }
-    // customerCount = eventPriorityQueue.getElementCount();
 
     // Event Loop
     while (!eventPriorityQueue.isEmpty()) {
@@ -104,7 +121,8 @@ int main(int argc, char* argv[]){
     cout << "Simulation Ends" << endl;
     cout << endl;
     cout << "Final Statistics: " << endl;
-    // cout << "    Total number of people processed:  " << customerCount << endl;
-    // cout << "    Average amount of time spent waiting: " << (float)sum/(float)customerCount << endl;
+    cout << endl;
+    cout << "    Total number of people processed: " << customerCount << endl;
+    cout << "    Average amount of time spent waiting: " << (float)sum/(float)customerCount << endl;
     return 0;
 }
