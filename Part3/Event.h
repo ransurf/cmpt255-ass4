@@ -71,3 +71,5 @@ public:
     // Description: prints the event object
     friend ostream &operator<<(ostream& os, const Event& event);
 };
+
+#include "Event.cpp"

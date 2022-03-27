@@ -33,3 +33,7 @@ jobs:
     - name: Part 2 Test
       run: valgrind ./td
       working-directory: Part2
+
+    - name: Compile Part 3
+      run: make
+      working-directory: Part3
