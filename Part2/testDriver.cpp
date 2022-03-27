@@ -19,8 +19,7 @@ void test_priorityQueue() {
     pq2.enqueue(2);
     pq2.enqueue(3);
 
-    // cout << pq2.isEmpty() << endl;
-    // assert(!pq2.isEmpty());
+    assert(!pq2.isEmpty());
     assert(pq2.peek() == 1);
     pq2.dequeue();
     assert(pq2.peek() == 2);
@@ -68,7 +67,7 @@ void test_priorityQueue() {
     pq5.enqueue(6);
     pq5.enqueue(8);
     pq5.enqueue(11);
-     
+    
     //dequeue and assert
     assert(pq5.peek() == 1);
     pq5.dequeue();
