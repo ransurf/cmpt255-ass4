@@ -18,6 +18,7 @@ using namespace std;
 
 // store sum of waiting time
 int sum = 0;
+int customerCount = 0;
 
 // Process an arrival event
 void processArrival(Event& arrivalEvent, PriorityQueue<Event>& eventPriorityQueue, Queue<Event>& bankLine, int & currentTime, bool & tellerAvailable){
@@ -96,8 +97,9 @@ int main(int argc, char* argv[]) {
         if (!eventPriorityQueue.enqueue(streamEvent)){
             return 1;
         }
+
+        customerCount++;
     }
-    customerCount = eventPriorityQueue.getElementCount();
 
     // Event Loop
     while (!eventPriorityQueue.isEmpty()) {

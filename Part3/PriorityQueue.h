@@ -66,8 +66,6 @@ public:
 
     // Let's feel free to add other private helper methods to our Priority Queue class.
 
-    // Description: Returns the elementCount of the Priority Queue
-    int getElementCount() const;
 
 }; // end PriorityQueue
 

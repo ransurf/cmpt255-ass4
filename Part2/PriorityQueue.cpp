@@ -76,7 +76,3 @@ ElementType PriorityQueue<ElementType>::peek() const {
     return elements.retrieve();
 }
 
-template <class ElementType>
-int PriorityQueue<ElementType>::getElementCount() const {
-    return elementCount;
-}
