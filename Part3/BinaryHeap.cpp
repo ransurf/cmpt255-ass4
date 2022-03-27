@@ -13,9 +13,9 @@
  *
  * Class Invariant:  Always a min Binary Heap
  * 
- * Author: 
+ * Author: Daehyung Kwak and John Mavrick Reyes
  *
- * Last Modification: March 2022
+ * Last Modification: March 26 2022
  *
  */  
 

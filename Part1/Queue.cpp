@@ -4,8 +4,8 @@
 //  * Description: Implementation of an int sequence with enqueue/dequeue ...
 //  * Class Invariant: ... in FIFO order
 //  *
-//  * Author:
-//  * Date:
+//  * Author: Daehyung Kwak and John Mavrick Reyes
+//  * Date: March 26, 2022
 //  */
  
 #include "Queue.h"

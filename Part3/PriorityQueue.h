@@ -6,8 +6,8 @@
  *                  - Sorted by time and type
  *                  - no access beyond the front of the queue
  *                  - adds elements in sort order
- * Last Modified: March 2022
- * Author: Daehyung Kwak
+ * Last Modified: March 26 2022
+ * Author: Daehyung Kwak and John Mavrick Reyes
  */
 
 #pragma once

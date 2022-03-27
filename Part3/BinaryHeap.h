@@ -5,14 +5,14 @@
  * // Blank space 1: The choices are "minimum" or "maximum" 
  *                   (Todo: fill in the other blank spaces below.)
  * // Blank space 2: Refer to our lecture notes for the data structure used as CDT.
- * Description: __________ Binary Heap data collection ADT class. 
- *              __________ implementation.
+ * Description: min Binary Heap data collection ADT class. 
+ *              array implementation.
  *
- * Class Invariant:  Always a __________ Binary Heap
+ * Class Invariant:  Always a min Binary Heap
  * 
- * Author: 
+ * Author: Daehyung Kwak and John Mavrick Reyes
  *
- * Last Modification: March 2022
+ * Last Modification: March 26 2022
  *
  */   
  
