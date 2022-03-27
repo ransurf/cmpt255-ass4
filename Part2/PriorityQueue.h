@@ -66,6 +66,7 @@ public:
 
     // Let's feel free to add other private helper methods to our Priority Queue class.
 
+    int getElementCount() const;int getElementCount() const;
 }; // end PriorityQueue
 
 #include "PriorityQueue.cpp"
