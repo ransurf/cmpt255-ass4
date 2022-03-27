@@ -64,4 +64,11 @@ ElementType PriorityQueue<ElementType>::peek() const {
     return elements.retrieve();
 }
 
-
+// Description: Getter for elementCount
+// Time Efficiency: O(1)
+// Precondition: None
+// Postcondition: Returns elementCount
+template <class ElementType>
+int PriorityQueue<ElementType>::getElementCount() const {
+    return elementCount;
+}

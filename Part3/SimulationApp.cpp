@@ -15,22 +15,28 @@ using namespace std;
 #include <sstream>
 #include <iomanip>
 
+// store sum of waiting time
 int sum = 0;
 
+// Process an arrival event
 void processArrival(Event& arrivalEvent, PriorityQueue<Event>& eventPriorityQueue, Queue<Event>& bankLine, int & currentTime, bool & tellerAvailable){
     cout << "Processing an arrival event at time:" << setw(5) << right << currentTime << endl;
+    
     eventPriorityQueue.dequeue();
     int departureTime;
-    if (bankLine.isEmpty() && tellerAvailable){
+    // if there is a teller available, process the customer
+    if (bankLine.isEmpty() && tellerAvailable) {
         departureTime = currentTime + arrivalEvent.getLength();
         Event departureEvent = Event(departureTime);
         eventPriorityQueue.enqueue(departureEvent);
         tellerAvailable = false;
+    // if there is no teller available, add the customer to the bank line
     } else {
         bankLine.enqueue(arrivalEvent);
     }
 }
 
+// Process a departure event
 void processDeparture(Event& departureEvent, PriorityQueue<Event>& eventPriorityQueue, Queue<Event>& bankLine, int & currentTime, bool & tellerAvailable){
     cout << "Processing a departure event at time:" << setw(4) << right << currentTime << endl;
     eventPriorityQueue.dequeue();
@@ -41,7 +47,7 @@ void processDeparture(Event& departureEvent, PriorityQueue<Event>& eventPriority
 
         try {
             Event customer = bankLine.peek();
-            sum = sum + currentTime - customer.getTime();
+            sum = sum + currentTime - customer.getTime(); // update sum of waiting time
             bankLine.dequeue();
             departureTime = currentTime + customer.getLength();
             Event newDepartureEvent = Event(departureTime);
@@ -82,7 +88,7 @@ int main(int argc, char* argv[]){
             return 1;
         }
     }
-    // customerCount = eventPriorityQueue.getElementCount();
+    customerCount = eventPriorityQueue.getElementCount();
 
     // Event Loop
     while (!eventPriorityQueue.isEmpty()) {
@@ -104,7 +110,7 @@ int main(int argc, char* argv[]){
     cout << "Simulation Ends" << endl;
     cout << endl;
     cout << "Final Statistics: " << endl;
-    // cout << "    Total number of people processed:  " << customerCount << endl;
-    // cout << "    Average amount of time spent waiting: " << (float)sum/(float)customerCount << endl;
+    cout << "    Total number of people processed:  " << customerCount << endl;
+    cout << "    Average amount of time spent waiting: " << (float)sum/(float)customerCount << endl;
     return 0;
 }

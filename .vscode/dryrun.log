@@ -1,0 +1,11 @@
+make.exe -f c:\Users\John\OneDrive - Simon Fraser University (1sfu)\CMPT 225\Ass\4 New\cmpt255-ass4\Makefile --dry-run --keep-going --print-directory
+make: Entering directory '/c/Users/John/OneDrive - Simon Fraser University (1sfu)/CMPT 225/Ass/4 New/cmpt255-ass4'
+ 
+make: c:\Users\John\OneDrive - Simon Fraser University (1sfu)\CMPT 225\Ass\4 New\cmpt255-ass4\Makefile: No such file or directory
+ 
+make: *** No rule to make target 'c:\Users\John\OneDrive - Simon Fraser University (1sfu)\CMPT 225\Ass\4 New\cmpt255-ass4\Makefile'.
+make: Failed to remake makefile 'c:\Users\John\OneDrive - Simon Fraser University (1sfu)\CMPT 225\Ass\4 New\cmpt255-ass4\Makefile'.
+make: *** No targets specified and no makefile found.  Stop.
+ 
+make: Leaving directory '/c/Users/John/OneDrive - Simon Fraser University (1sfu)/CMPT 225/Ass/4 New/cmpt255-ass4'
+ 
