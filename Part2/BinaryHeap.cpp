@@ -47,10 +47,11 @@ template <class ElementType>
 bool BinaryHeap<ElementType>::insert(const ElementType& newElement) {
 
     bool ableToInsert = true;
-  
-	elements[elementCount] = newElement;
-	elementCount++;
-	reHeapUp(elementCount-1);
+	if(100 > elementCount) {
+		elements[elementCount] = newElement;
+		elementCount++;
+		reHeapUp(elementCount-1);
+	}
 	
     return ableToInsert;
 

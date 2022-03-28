@@ -93,6 +93,16 @@ void test_priorityQueue() {
     pq5.dequeue();
     assert(pq5.isEmpty());
     cout << "Passed" << endl;
+
+    // Test 6
+    cout << "Test 6: ";
+    PriorityQueue<int> pq6 = PriorityQueue<int>();
+    for (int i = 0; i < 100; i++) {
+        pq6.enqueue(i);
+    }
+    bool result = pq6.enqueue(101);
+    assert(!result);
+    cout << "Passed" << endl;
 }
 
 int main() {
