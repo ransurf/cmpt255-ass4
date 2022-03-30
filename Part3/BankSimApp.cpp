@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
     Queue<Event> bankLine = Queue<Event>();
     PriorityQueue<Event> eventPriorityQueue = PriorityQueue<Event>();
     bool tellerAvailable = true;
-    double customerCount = 0.0;
+    int customerCount = 0;
 
     string aLine = "";
     int length = 0;
@@ -100,6 +100,7 @@ int main(int argc, char* argv[]) {
 
         customerCount++;
     }
+    inputFile.close();
 
     // Event Loop
     while (!eventPriorityQueue.isEmpty()) {

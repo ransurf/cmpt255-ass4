@@ -4,8 +4,8 @@
 //  * Description: Implementation of an int sequence with enqueue/dequeue ...
 //  * Class Invariant: ... in FIFO order
 //  *
-//  * Author: Daehyung Kwak and John Mavrick Reyes
-//  * Date: March 26, 2022
+//  * Author:
+//  * Date:
 //  */
  
 #include "Queue.h"
@@ -93,7 +93,16 @@ void Queue<ElementType>::dequeue() {
     }
 
     this->elementCount--;
-    frontindex = (frontindex + 1) % capacity;
+    
+    if(this->elementCount == 0 && this->capacity > 0) {
+        this->frontindex = 0;
+        this->backindex = 0;
+        this->capacity = 0;
+        delete [] this->elements;
+    }
+    else {
+        frontindex = (frontindex + 1) % capacity;
+    }
 } 
 
 
