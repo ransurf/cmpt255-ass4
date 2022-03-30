@@ -1,7 +1,10 @@
 all: BankSimApp
 
-BankSimApp: EmptyDataCollectionException.o BankSimApp.o BinaryHeap.h PriorityQueue.h Queue.h Event.h
-	g++ -Wall -o BankSimApp BankSimApp.o EmptyDataCollectionException.o
+BankSimApp: EmptyDataCollectionException.o BankSimApp.o Event.o BinaryHeap.h PriorityQueue.h Queue.h
+	g++ -Wall -o BankSimApp BankSimApp.o EmptyDataCollectionException.o Event.o
+
+Event.o: Event.h Event.cpp
+	g++ -Wall -c Event.cpp
 
 BankSimApp.o: BankSimApp.cpp
 	g++ -Wall -c BankSimApp.cpp

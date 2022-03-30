@@ -29,7 +29,8 @@ void processArrival(Event& arrivalEvent, PriorityQueue<Event>& eventPriorityQueu
     // if there is a teller available, process the customer
     if (bankLine.isEmpty() && tellerAvailable) {
         departureTime = currentTime + arrivalEvent.getLength();
-        Event departureEvent = Event(departureTime);
+        Event departureEvent = Event('D', departureTime);
+        // departureEvent.setTime(departureTime);
         eventPriorityQueue.enqueue(departureEvent);
         tellerAvailable = false;
     // if there is no teller available, add the customer to the bank line
@@ -52,7 +53,8 @@ void processDeparture(Event& departureEvent, PriorityQueue<Event>& eventPriority
             sum = sum + currentTime - customer.getTime(); // update sum of waiting time
             bankLine.dequeue();
             departureTime = currentTime + customer.getLength();
-            Event newDepartureEvent = Event(departureTime);
+            Event newDepartureEvent = Event('D', departureTime);
+            // newDepartureEvent.setTime(departureTime);
             eventPriorityQueue.enqueue(newDepartureEvent);
         } catch (EmptyDataCollectionException& exception){
             cout << exception.what() << endl;

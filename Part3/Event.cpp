@@ -1,99 +1,106 @@
 /*
  * Event.cpp
  *
- * Class Description: Models an event (arrival or departure)
- * Class Invariant:  Must be of type Departure or Arrival (D or A).
- * Last Modified: March 26 2022
- * Author: Daehyung Kwak and John Mavrick Reyes
+ * Description: Models arrival or departure event.
+ *
+ * Class Invariant: Arrival events have type 'A'
+ * 					Departure event have type 'D'
+ *
+ * Author: AL
+ * Last Modified: March 2022
  */
+
 #include <iostream>
 #include "Event.h"
 
 using namespace std;
 
-// Description: Default constructor for event class
-Event::Event(){
-    this->type = ARRIVAL;
-    this->time = 0;
-    this->length = 0;
+
+// Constructor
+Event::Event() {
+	type = ARRIVAL;
+	time = 0;
+	length = 0;
 }
 
-// Description: Parametrized constructor for departure event
-Event::Event(int time){
-    this->type = DEPARTURE;
-    this->time = time;
-    this->length = 0;
+Event::Event(char aType, int aTime) {
+	type = aType;
+	time = aTime;
+	length = 0;
 }
 
-// Description: Parametrized constructor for event class
-Event::Event(char type, int time, int length){
-    this->type = type;
-    this->time = time;
-    this->length = length;
+Event::Event(char aType, int aTime, int aLength) {
+	type = aType;
+	time= aTime;
+	length = aLength;
 }
 
-// Description: Returns type of event (arrival or departure)
-// Post-Condition: Nothing changed
+// Getters
 char Event::getType() const {
-    return this->type;
+	return type;
 }
 
-// Description: Returns time of event
-// Post-Condition: Nothing changed
 int Event::getTime() const {
-    return this->time;
+	return time;
 }
 
-// Description: Returns length of event
-// Post-Condition: Nothing changed
+// Postcondition: The length makes sense only when the type is "A".
 int Event::getLength() const {
-    return this->length;
+	return length;
 }
 
-// Description: Sets type of event, A or D, or just A if neither is input
-// Pre-Condition: Options are A or D chars
-// Post-Condition: Type is A or D
-void Event::setType(const char type){
-    if (type != ARRIVAL && type != DEPARTURE) {
-        this->type = ARRIVAL;
-    } else {
-        this->type = type;
-    }
+// Setters
+// Not expected to be used in this simulation
+void Event::setType( char aType ) {
+	type = aType;
 }
 
-// Description: Sets time of event, or 0 if time is less than zero
-// Pre-Condition: time is greater than 0
-// Post-Condition: Type is given time or 0
-void Event::setTime(const int time){
-    if (time < 0) {
-        this->time = 0;
-    } else {
-        this->time = time;
-    }
+void Event::setTime( int aTime ) {
+	time = aTime;
 }
 
-// Description: Sets length of event, or 0 if length is less than zero
-// Pre-Condition: length is greater than 0
-// Post-Condition: length is given length or 0
-void Event::setLength(const int length){
-    if (length < 0) {
-        this->length = 0;
-    } else {
-        this->length = length;
-    }
+void Event::setLength( int aLength ) {
+	if( type == ARRIVAL )
+	   length = aLength;
+	else
+	   length = 0;
 }
 
-// Description: return a bool based on time and type of event
-bool Event::operator<(const Event & rhs){
-    if (getTime() == rhs.getTime()){
-        return getType() < rhs.getType();
-    }
-    return getTime() < rhs.getTime();
 
+// Description: Return true if this event is an arrival event, false otherwise.
+bool Event::isArrival(){
+	return type == ARRIVAL;
 }
 
-// Description: prints the event object
-ostream &operator<<(ostream& os, const Event& event){
-    os << event.getType() << ", " << event.getTime() << ", " << event.getLength() << endl;
-    return os;
+// Overloaded Operators
+// Description: Comparison <= operator. 
+bool Event::operator<=(const Event& rhs) {
+
+	// Compare both Event objects
+	if (time == rhs.getTime() )
+		if ((type == rhs.getType()) || (type == ARRIVAL && rhs.getType() == DEPARTURE) )
+			return true;
+		else
+			return false;
+	else
+	    if (time < rhs.getTime() )
+			return true;
+		else
+			return false;
+
+	return false;
+} // end of operator<=
+
+
+// For Testing Purposes
+// Description: Prints the content of "rhs".
+ostream& operator<<(ostream & os, const Event& rhs) {
+
+   	os << "Event - Type: " << rhs.getType();
+   	os << ", Time: " << rhs.getTime();
+   	if ( rhs.getType() == Event::ARRIVAL ) os << ", Length: " << rhs.getLength();
+   	os << endl << endl;
+
+	return os;
 }
+// end of operator <<

@@ -63,7 +63,7 @@ void BinaryHeap<ElementType>::reHeapUp(unsigned int indexOfBottom) {
 
 	if(indexOfBottom > 0) {
 		int indexOfParent = floor((indexOfBottom - 1) / 2);
-		if(elements[indexOfBottom] < elements[indexOfParent])
+		if(elements[indexOfBottom] <= elements[indexOfParent])
 		{
 			//Swap
 			ElementType temp = elements[indexOfParent];
@@ -105,12 +105,12 @@ void BinaryHeap<ElementType>::reHeapDown(unsigned int indexOfRoot) {
 	int indexOfSmallestChild = indexOfRoot;
 	
 	if(indexOfLeftChild < elementCount) {
-		if(elements[indexOfLeftChild] < elements[indexOfSmallestChild])
+		if(elements[indexOfLeftChild] <= elements[indexOfSmallestChild])
 			indexOfSmallestChild = indexOfLeftChild;
 	}
 	
 	if(indexOfRightChild < elementCount) {
-		if(elements[indexOfRightChild] < elements[indexOfSmallestChild])
+		if(elements[indexOfRightChild] <= elements[indexOfSmallestChild])
 			indexOfSmallestChild = indexOfRightChild;
 	}
 	
